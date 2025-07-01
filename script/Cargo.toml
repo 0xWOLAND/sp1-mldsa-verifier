@@ -1,0 +1,20 @@
+[package]
+version = "0.1.0"
+name = "mldsa-script"
+edition = "2021"
+default-run = "mldsa"
+
+[[bin]]
+name = "mldsa"
+path = "src/bin/main.rs"
+
+[dependencies]
+sp1-sdk = "5.0.0"
+clap = { version = "4.0", features = ["derive", "env"] }
+hex = "0.4.3"
+dilithium = { package = "crystals-dilithium", git = "https://github.com/0xWOLAND/dilithium" }
+dotenv = "0.15.0"
+rand = "0.9.1"
+
+[build-dependencies]
+sp1-build = "5.0.0"

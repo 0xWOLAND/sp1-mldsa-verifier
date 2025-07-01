@@ -1,0 +1,11 @@
+[package]
+version = "0.1.0"
+name = "mldsa-program"
+edition = "2021"
+
+[dependencies]
+sp1-zkvm = "5.0.0"
+dilithium = { package = "crystals-dilithium", git = "https://github.com/0xWOLAND/dilithium" }
+
+[patch.crates-io]
+sha3-v0-10-8 = { git = "https://github.com/sp1-patches/RustCrypto-hashes", package = "sha3", tag = "patch-sha3-0.10.8-sp1-4.0.0" }
