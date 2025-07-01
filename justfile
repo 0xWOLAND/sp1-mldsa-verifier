@@ -1,13 +1,13 @@
-# Build the program
+# Build all programs
 build:
     cd program && cargo prove build
 
-# Execute the program without generating a proof
+# Execute ML-DSA variant (2=ML-DSA-44, 3=ML-DSA-65, 5=ML-DSA-87)
 execute variant="2":
     just build
     cd script && RUST_LOG=info cargo run --release -- --execute --variant {{variant}}
 
-# Generate a proof (default: Groth16)
+# Generate proof for ML-DSA variant (default: Groth16)
 prove variant="2" mode="groth16":
     cd script && RUST_LOG=info cargo run --release -- --prove --variant {{variant}} --proof-mode {{mode}}
 

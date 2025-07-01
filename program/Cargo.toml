@@ -3,6 +3,18 @@ version = "0.1.0"
 name = "mldsa-program"
 edition = "2021"
 
+[[bin]]
+name = "mldsa44"
+path = "src/bin/mldsa44.rs"
+
+[[bin]]
+name = "mldsa65"
+path = "src/bin/mldsa65.rs"
+
+[[bin]]
+name = "mldsa87"
+path = "src/bin/mldsa87.rs"
+
 [dependencies]
 sp1-zkvm = "5.0.0"
 dilithium = { package = "crystals-dilithium", git = "https://github.com/0xWOLAND/dilithium" }

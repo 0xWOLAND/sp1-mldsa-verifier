@@ -3,7 +3,9 @@ use dilithium::{ml_dsa_44, ml_dsa_65, ml_dsa_87};
 use rand::Rng;
 use sp1_sdk::{include_elf, ProverClient, SP1ProofMode, SP1Stdin};
 
-pub const MLDSA_ELF: &[u8] = include_elf!("mldsa-program");
+pub const MLDSA44_ELF: &[u8] = include_elf!("mldsa44");
+pub const MLDSA65_ELF: &[u8] = include_elf!("mldsa65");
+pub const MLDSA87_ELF: &[u8] = include_elf!("mldsa87");
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -84,14 +86,21 @@ fn main() {
         _ => panic!("Invalid variant: {}", args.variant),
     };
 
+    // Select the correct ELF based on variant
+    let elf = match args.variant {
+        2 => MLDSA44_ELF,
+        3 => MLDSA65_ELF,
+        5 => MLDSA87_ELF,
+        _ => panic!("Invalid variant: {}", args.variant),
+    };
+
     let mut stdin = SP1Stdin::new();
-    stdin.write(&args.variant);
     stdin.write(&public_key);
     stdin.write(&signature);
     stdin.write(&message);
 
     if args.execute {
-        let (output, report) = client.execute(MLDSA_ELF, &stdin).run().unwrap();
+        let (output, report) = client.execute(elf, &stdin).run().unwrap();
         let is_valid: bool = output.as_slice()[0] != 0;
         println!("Signature valid: {}", is_valid);
         println!("Cycles: {}", report.total_instruction_count());
@@ -102,7 +111,7 @@ fn main() {
             _ => panic!("Invalid proof mode: {}", args.proof_mode),
         };
 
-        let (pk, vk) = client.setup(MLDSA_ELF);
+        let (pk, vk) = client.setup(elf);
         let proof = client
             .prove(&pk, &stdin)
             .mode(mode)
